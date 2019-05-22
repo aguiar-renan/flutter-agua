@@ -1,3 +1,4 @@
+library bottom_navy_bar;
 import 'package:flutter/material.dart';
 import 'package:flutter_login_demo/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -25,6 +26,31 @@ class _HomePageState extends State<HomePage> {
   final _textEditingController = TextEditingController();
   StreamSubscription<Event> _onTodoAddedSubscription;
   StreamSubscription<Event> _onTodoChangedSubscription;
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter = _counter + 100;
+    });
+  }
+
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+
+    int _cIndex = 0;
+
+    void _incrementTab(index) {
+      setState(() {
+        _cIndex = index;
+      });
+    }
+
+  }
+
+
 
   Query _todoQuery;
 
@@ -199,6 +225,83 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Hidrate-se'),
+          actions: <Widget>[
+            new FlatButton(
+                child: new Text('Sair',
+                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+                onPressed: _signOut)
+          ],
+        ),
+        body: new Center(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text(
+                'Quantidade consumida hoje (ml)',
+                style: new TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+              new Text(
+                '$_counter',
+                style: new TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 100.0,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    onPressed: _incrementCounter,
+                    child: new Text("Add"),
+                  ),
+                  new RaisedButton(
+                    onPressed: _resetCounter,
+                    textColor: Colors.white,
+                    color: Colors.red,
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Text(
+                      "Zerar",
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+
+        ),
+      bottomNavigationBar: BottomNavigationBar(
+      currentIndex: 0, // this will be set when a new tab is tapped
+      items: [
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.home),
+          title: new Text('Home'),
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Perfil'),
+        )
+      ],
+    )
+    );
+
+    return null;
+  }
+
+
+  /*
   Widget _showTodoList() {
     if (_todoList.length > 0) {
       return ListView.builder(
@@ -241,6 +344,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -253,7 +358,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: _signOut)
           ],
         ),
-        body: _showTodoList(),
+        //body: _showTodoList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _showDialog(context);
@@ -263,4 +368,6 @@ class _HomePageState extends State<HomePage> {
         )
     );
   }
+
+  */
 }
